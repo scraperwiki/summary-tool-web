@@ -3,7 +3,7 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 from flask import Flask
-from app.summary import summary
+from app.summary_blueprint import summary
 
 flask_app = Flask('__name__')
 flask_app.register_blueprint(summary)
