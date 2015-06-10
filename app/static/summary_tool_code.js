@@ -159,8 +159,6 @@ var fill_in_tab = function(cb) {
           cb()
         } else {
           $.getJSON("/static/summary/summary_tool_stopwords.json", function(data) {
-    	  //scraperwiki.exec("./tool/stopwords.py", function(data) {
-             //nltk_stop_words = JSON.parse(data)
             nltk_stop_words = data
             cb()
           }, handle_error)
@@ -168,8 +166,6 @@ var fill_in_tab = function(cb) {
     } ],
     // Get total number of rows
     getTotal: [ function(cb) {
-      //TODO: tidy
-      //scraperwiki.sql("select count(*) as c from `" + table + "`", function(data) {
       select("count(*) as c from `" + table + "`").done(function(data) {
         total = data[0].c
         fact_total_rows()
@@ -189,8 +185,6 @@ var fill_in_tab = function(cb) {
 	  return
         }
         // the nullif here converts empty strings to nulls, to simplify stuff
-        //TODO: tidy
-        //scraperwiki.sql("select `" + col + "` as val, count(*) as c from `" + table + "` group by val order by c desc", function(group) {
         select("`" + col + "` as val, count(*) as c from `" + table + "` group by val order by c desc").done(function(group) {
           merge_empty_and_null(col, group)
           groups[col] = group
@@ -250,10 +244,6 @@ var metaQuery = function() {
 
 // Main entry point
 $(function() {
-  // Get schema of SQL database
-  // TODO: Tidy
-  //scraperwiki.sql.meta(function(lmeta) {
-  // TODO: Tidy the URLs being used.
   window.selectEndpoint = '../select'
   window.metaEndpoint = '../meta'
   
