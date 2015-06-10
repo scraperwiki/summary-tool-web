@@ -159,8 +159,6 @@ var fill_in_tab = function(cb) {
           cb()
         } else {
           $.getJSON("/static/summary/summary_tool_stopwords.json", function(data) {
-    	  //scraperwiki.exec("./tool/stopwords.py", function(data) {
-             //nltk_stop_words = JSON.parse(data)
             nltk_stop_words = data
             cb()
           }, handle_error)
@@ -168,8 +166,6 @@ var fill_in_tab = function(cb) {
     } ],
     // Get total number of rows
     getTotal: [ function(cb) {
-      //TODO: tidy
-      //scraperwiki.sql("select count(*) as c from `" + table + "`", function(data) {
       select("count(*) as c from `" + table + "`").done(function(data) {
         total = data[0].c
         fact_total_rows()
@@ -178,21 +174,16 @@ var fill_in_tab = function(cb) {
          cb("onerow")
         else
          cb()
-      //}, handle_error)
-    }) // TODO: Add fail()
+      }).fail(handle_error)
     }],
     // For every column, count the number of meta groupings
-    // TODO: reinstate stopWords
-    getGroups: [ 'getTotal', function(cb1) {
-    //getGroups: [ 'stopWords', 'getTotal', function(cb1) {
+    getGroups: [ 'stopWords', 'getTotal', function(cb1) {
       async.forEachLimit(meta.columnNames, 4, function(col, cb2) {
         if (blacklisted_column(col)) {
           cb2()
 	  return
         }
         // the nullif here converts empty strings to nulls, to simplify stuff
-        //TODO: tidy
-        //scraperwiki.sql("select `" + col + "` as val, count(*) as c from `" + table + "` group by val order by c desc", function(group) {
         select("`" + col + "` as val, count(*) as c from `" + table + "` group by val order by c desc").done(function(group) {
           merge_empty_and_null(col, group)
           groups[col] = group
@@ -213,9 +204,7 @@ var fill_in_tab = function(cb) {
           fact_domain_table(col, group)
 
           cb2()
-        //}, handle_error)
-      }
-        )
+      }).fail(handle_error)
       }, function() {
         cb1()
       })
@@ -252,10 +241,6 @@ var metaQuery = function() {
 
 // Main entry point
 $(function() {
-  // Get schema of SQL database
-  // TODO: Tidy
-  //scraperwiki.sql.meta(function(lmeta) {
-  // TODO: Tidy the URLs being used.
   window.selectEndpoint = '../select'
   window.metaEndpoint = '../meta'
   
@@ -312,16 +297,7 @@ $(function() {
       makeTables()
       }
     loadTables()
-  }).fail(function(jqXHR, textStatus, errorThrown) {
-      handle_ajax_error(jqXHR, textStatus, errorThrown)
-      })
-  
-
-//    }, handle_error)
-//  }, function(err) {
-//    console.log(err)
-//    scraperwiki.alert(err.responseText, "", true)
-//})
+  }).fail(handle_error)
 
   $('#bugs').on('click', function() {
     window.open("https://github.com/frabcus/magic-summary-tool/issues", "_blank")
