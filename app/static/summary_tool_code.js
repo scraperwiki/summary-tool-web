@@ -157,7 +157,7 @@ var fill_in_tab = function(cb) {
         if (nltk_stop_words != null) {
           cb()
         } else {
-          $.getJSON("/static/summary/summary_tool_stopwords.json", function(data) {
+          $.getJSON("./static/summary/summary_tool_stopwords.json", function(data) {
             nltk_stop_words = data
             cb()
           }, handle_error)
