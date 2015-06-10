@@ -147,7 +147,6 @@ var fill_in_tab = function(cb) {
       })
       local_tab.find('.facts').masonry('reload')
       // save tab as default for first time load
-      // TODO: Reinstate, probably via localStorage
       localStorage.setItem('summary-tool-web_'+window.location.pathname, JSON.stringify(local_table_ix, null, 4))
     }
   })
@@ -254,9 +253,6 @@ $(function() {
     console.log(tables)
     var loadTables = function() {
       // Load last tab to show
-      // TODO: Reinstate table saving
-      //scraperwiki.exec("cat saved_table_ix", function(new_saved_table_ix) {
-      // TODO: Remove saved_table_ix hack
       content = localStorage.getItem('summary-tool-web_'+window.location.pathname)
       if(content) {
         try {
