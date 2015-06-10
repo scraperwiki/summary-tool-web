@@ -240,8 +240,8 @@ var metaQuery = function() {
 
 // Main entry point
 $(function() {
-  window.selectEndpoint = '../select'
-  window.metaEndpoint = '../meta'
+  window.selectEndpoint = '../sql_backend/select'
+  window.metaEndpoint = '../sql_backend/meta'
   
   metaQuery().done(function(lmeta) {
     var tables = _.keys(lmeta.table)
