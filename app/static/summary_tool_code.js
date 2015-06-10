@@ -174,8 +174,7 @@ var fill_in_tab = function(cb) {
          cb("onerow")
         else
          cb()
-      //}, handle_error)
-    }) // TODO: Add fail()
+      }).fail(handle_error)
     }],
     // For every column, count the number of meta groupings
     getGroups: [ 'stopWords', 'getTotal', function(cb1) {
@@ -205,9 +204,7 @@ var fill_in_tab = function(cb) {
           fact_domain_table(col, group)
 
           cb2()
-        //}, handle_error)
-      }
-        )
+      }).fail(handle_error)
       }, function() {
         cb1()
       })
@@ -300,16 +297,7 @@ $(function() {
       makeTables()
       }
     loadTables()
-  }).fail(function(jqXHR, textStatus, errorThrown) {
-      handle_ajax_error(jqXHR, textStatus, errorThrown)
-      })
-  
-
-//    }, handle_error)
-//  }, function(err) {
-//    console.log(err)
-//    scraperwiki.alert(err.responseText, "", true)
-//})
+  }).fail(handle_error)
 
   $('#bugs').on('click', function() {
     window.open("https://github.com/frabcus/magic-summary-tool/issues", "_blank")
