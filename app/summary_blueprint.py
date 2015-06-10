@@ -12,7 +12,7 @@ summary = Blueprint('summary', __name__, static_folder='static',
                     static_url_path='/static/summary')
 
 
-@summary.route('/summary')
+@summary.route('/')
 def summarise():
     return summary.send_static_file('summary_tool_index.html')
 
