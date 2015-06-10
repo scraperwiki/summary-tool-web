@@ -182,9 +182,7 @@ var fill_in_tab = function(cb) {
     }) // TODO: Add fail()
     }],
     // For every column, count the number of meta groupings
-    // TODO: reinstate stopWords
-    getGroups: [ 'getTotal', function(cb1) {
-    //getGroups: [ 'stopWords', 'getTotal', function(cb1) {
+    getGroups: [ 'stopWords', 'getTotal', function(cb1) {
       async.forEachLimit(meta.columnNames, 4, function(col, cb2) {
         if (blacklisted_column(col)) {
           cb2()
