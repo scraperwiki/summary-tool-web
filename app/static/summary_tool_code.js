@@ -148,7 +148,7 @@ var fill_in_tab = function(cb) {
       local_tab.find('.facts').masonry('reload')
       // save tab as default for first time load
       // TODO: Reinstate, probably via localStorage
-      //scraperwiki.exec("echo " + local_table_ix + " > saved_table_ix")
+      localStorage.setItem('summary-tool-web_'+window.location.pathname, JSON.stringify(local_table_ix, null, 4))
     }
   })
 
@@ -257,9 +257,17 @@ $(function() {
       // TODO: Reinstate table saving
       //scraperwiki.exec("cat saved_table_ix", function(new_saved_table_ix) {
       // TODO: Remove saved_table_ix hack
-      var new_saved_table_ix = '1'
+      content = localStorage.getItem('summary-tool-web_'+window.location.pathname)
+      if(content) {
+        try {
+          saved_table_ix = JSON.parse(content)
+          console.log("saved_table_ix", saved_table_ix)
+          } catch(e) {
+          console.log("Failed to parse settings.", String(e), "\n\n" + content)
+        }
+      }
       var makeTables = function() {
-        saved_table_ix = Number(new_saved_table_ix)
+        saved_table_ix = Number(saved_table_ix)
         if (saved_table_ix < 1 || isNaN(saved_table_ix))
           saved_table_ix = 1
         if (saved_table_ix > tables.length)
